@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>nRF54L Pin Planner</title>
     <style>
         :root {
@@ -26,6 +27,48 @@
             --text-color: #333333;
             --light-text: #666666;
             --system-color: #8e44ad; /* Purple color for system/required components */
+            --background-color: #f9f9f9;
+            --container-background: white;
+            --chip-background: #e0e0e0;
+            --chip-body-background: #d0d0d0;
+            --pin-background: #cccccc;
+            --pin-border: #999999;
+            --legend-background: #f9f9f9;
+            --modal-background: white;
+            --modal-overlay: rgba(0, 0, 0, 0.5);
+            --input-background: white;
+            --hover-background: #e0e0e0;
+            --table-header-background: #f5f5f5;
+            --accordion-background: #f1f1f1;
+            --accordion-active-background: #e0e0e0;
+        }
+
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --primary-color: #4da6ff;
+            --secondary-color: #1a2332;
+            --border-color: #444444;
+            --success-color: #66bb6a;
+            --warning-color: #ffa726;
+            --error-color: #ef5350;
+            --disabled-color: #2a2a2a;
+            --text-color: #e0e0e0;
+            --light-text: #b0b0b0;
+            --system-color: #ab47bc; /* Purple color for system/required components */
+            --background-color: #121212;
+            --container-background: #1e1e1e;
+            --chip-background: #2a2a2a;
+            --chip-body-background: #333333;
+            --pin-background: #404040;
+            --pin-border: #666666;
+            --legend-background: #1e1e1e;
+            --modal-background: #1e1e1e;
+            --modal-overlay: rgba(0, 0, 0, 0.8);
+            --input-background: #2a2a2a;
+            --hover-background: #333333;
+            --table-header-background: #2a2a2a;
+            --accordion-background: #2a2a2a;
+            --accordion-active-background: #333333;
         }
 
         * {
@@ -36,9 +79,10 @@
         body {
             margin: 0;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         h1, h2, h3 {
@@ -49,9 +93,10 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
-            background-color: white;
+            background-color: var(--container-background);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
         .header {
@@ -73,7 +118,8 @@
             border: 1px solid var(--border-color);
             border-radius: 5px;
             padding: 15px;
-            background-color: white;
+            background-color: var(--container-background);
+            transition: background-color 0.3s ease;
         }
 
         .chip-display {
@@ -82,7 +128,8 @@
             border: 1px solid var(--border-color);
             border-radius: 5px;
             padding: 15px;
-            background-color: white;
+            background-color: var(--container-background);
+            transition: background-color 0.3s ease;
         }
 
         .selected-peripherals {
@@ -91,7 +138,8 @@
             border: 1px solid var(--border-color);
             border-radius: 5px;
             padding: 15px;
-            background-color: white;
+            background-color: var(--container-background);
+            transition: background-color 0.3s ease;
         }
         
         .simple-peripherals {
@@ -387,8 +435,9 @@
             width: 420px;
             height: 420px;
             margin: 0 auto;
-            background-color: #e0e0e0;
+            background-color: var(--chip-background);
             border-radius: 10px;
+            transition: background-color 0.3s ease;
         }
 
         .chip-body {
@@ -399,8 +448,9 @@
             bottom: 10px;
             width: 400px;
             height: 400px;
-            background-color: #d0d0d0;
+            background-color: var(--chip-body-background);
             border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
         .pin {
@@ -408,8 +458,8 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background-color: #cccccc;
-            border: 1px solid #999999;
+            background-color: var(--pin-background);
+            border: 1px solid var(--pin-border);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -417,6 +467,7 @@
             cursor: pointer;
             transition: all 0.2s;
             z-index: 5;
+            color: var(--text-color);
         }
 
         .search-box {
@@ -425,6 +476,9 @@
             margin-bottom: 15px;
             border: 1px solid var(--border-color);
             border-radius: 4px;
+            background-color: var(--input-background);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         /* New CSS for vertical accordion menu */
@@ -444,17 +498,19 @@
         }
         
         .accordion-header {
-            background-color: #f1f1f1;
+            background-color: var(--accordion-background);
             padding: 10px 15px;
             cursor: pointer;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .accordion-header:hover {
-            background-color: #e0e0e0;
+            background-color: var(--accordion-active-background);
         }
         
         .accordion-header.active {
@@ -465,9 +521,10 @@
         .accordion-content {
             display: none;
             padding: 15px;
-            background-color: white;
+            background-color: var(--container-background);
             max-height: 300px;
             overflow-y: auto;
+            transition: background-color 0.3s ease;
         }
         
         .accordion-content.active {
@@ -534,11 +591,12 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: var(--modal-overlay);
+            transition: background-color 0.3s ease;
         }
 
         .modal-content {
-            background-color: white;
+            background-color: var(--modal-background);
             margin: 10% auto;
             padding: 20px;
             border-radius: 5px;
@@ -546,6 +604,8 @@
             max-width: 800px;
             max-height: 80vh;
             overflow-y: auto;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .modal-header {
@@ -586,7 +646,9 @@
         }
 
         .pin-selection-table th {
-            background-color: #f5f5f5;
+            background-color: var(--table-header-background);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .pin-selection-table select {
@@ -594,6 +656,9 @@
             padding: 8px;
             border-radius: 4px;
             border: 1px solid var(--border-color);
+            background-color: var(--input-background);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .pin-selection-table .checkbox-options {
@@ -670,10 +735,102 @@
             padding: 8px;
             border-radius: 4px;
             border: 1px solid var(--border-color);
+            background-color: var(--input-background);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+                /* Dark mode toggle button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 56px;
+            height: 32px;
+            min-width: 56px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+        
+        /* Dark mode specific adjustments */
+        [data-theme="dark"] .selected-item:hover {
+            background-color: var(--hover-background);
+        }
+        
+        [data-theme="dark"] .selected-item.system {
+            background-color: #2d1b3d;
+            border-left: 3px solid var(--system-color);
+        }
+        
+        [data-theme="dark"] .selected-item.highlighted {
+            background-color: #3d2f1a;
+            border: 2px solid #ff9900;
+            box-shadow: 0 0 8px rgba(255, 153, 0, 0.4);
+        }
+        
+        [data-theme="dark"] .single-peripheral-btn {
+            background-color: var(--accordion-background);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        [data-theme="dark"] .single-peripheral-btn:hover {
+            background-color: var(--hover-background);
+        }
+        
+        [data-theme="dark"] .peripheral-item:hover {
+            background-color: var(--hover-background);
+        }
+        
+        [data-theme="dark"] .simple-peripherals {
+            background-color: var(--accordion-background);
+        }
+        
+        [data-theme="dark"] .required-peripherals {
+            background-color: #2d1b3d;
+            border: 1px solid var(--system-color);
+        }
+        
+        [data-theme="dark"] .pin-details {
+            background-color: var(--accordion-background);
+        }
+        
+        [data-theme="dark"] .package-selector {
+            background-color: var(--accordion-background);
+        }
+        
+        [data-theme="dark"] button:hover {
+            background-color: #3d7acc;
         }
     </style>
 </head>
 <body>
+    <!-- Dark Mode Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+        <i class="fas fa-moon"></i>
+    </button>
+    
     <div class="container">
         <div class="header">
             <h1>nRF54L Pin Planner</h1>
@@ -859,6 +1016,45 @@
     </div>
     
     <script>
+        // Dark mode functionality
+        function initializeDarkMode() {
+            // Check if user has a preference saved
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Apply saved theme or system preference
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else if (prefersDark) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        }
+        
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            // Update toggle button icon
+            const toggleButton = document.getElementById('themeToggle');
+            if (toggleButton) {
+                const icon = toggleButton.querySelector('i');
+                if (icon) {
+                    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+                toggleButton.title = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+            }
+            
+            // Save preference
+            localStorage.setItem('theme', theme);
+        }
+        
+        function toggleDarkMode() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+        
         // Data structures
         const peripherals = {
             "SPI": [
@@ -1240,6 +1436,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log("Initializing nRF54L Pin Planner...");
             
+            // Initialize dark mode
+            initializeDarkMode();
+            
             // Organize peripherals into single and multi-instance categories
             organizePeripherals();
             
@@ -1251,6 +1450,7 @@
             document.getElementById('exportBtn').addEventListener('click', exportConfiguration);
             document.getElementById('importBtn').addEventListener('click', openImportModal);
             document.getElementById('searchPeripherals').addEventListener('input', filterPeripherals);
+            document.getElementById('themeToggle').addEventListener('click', toggleDarkMode);
             
             // Simple peripherals checkboxes
             document.getElementById('xl1xl2-checkbox').addEventListener('change', toggleXL1XL2);
@@ -1602,6 +1802,7 @@
             // Create a configuration object
             const config = {
                 package: currentPackage,
+                theme: localStorage.getItem('theme') || 'light',
                 peripherals: selectedPeripherals.map(p => ({
                     id: p.id,
                     category: p.category,
@@ -1727,6 +1928,11 @@
                     document.getElementById('packageSelector').value = config.package;
                     currentPackage = config.package;
                     document.getElementById('chipTitleDisplay').textContent = `${currentPackage} Pin Layout`;
+                }
+                
+                // Set the theme
+                if (config.theme) {
+                    setTheme(config.theme);
                 }
                 
                 // Restore used addresses
